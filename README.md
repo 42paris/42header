@@ -47,6 +47,7 @@ Inside the **42 clusters** you can easily run:
 [@alexandregv](https://github.com/alexandregv) - contributor  
 [@mjacq42](https://github.com/mjacq42) - contributor  
 [@sungmcho](https://github.com/lordtomi0325) - contributor  
+[@fclivaz42](https://github.com/fclivaz42) - contributor  
 
 ### **License**
 

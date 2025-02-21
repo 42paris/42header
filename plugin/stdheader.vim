@@ -15,7 +15,7 @@ let s:length	= 80
 let s:margin	= 5
 
 let s:types		= {
-			\'\.c$\|\.h$\|\.cc$\|\.hh$\|\.cpp$\|\.hpp$\|\.tpp$\|\.ipp$\|\.cxx$\|\.go$\|\.rs$\|\.php$\|\.py$\|\.java$\|\.kt$\|\.kts$':
+			\'\.c$\|\.h$\|\.cc$\|\.hh$\|\.cpp$\|\.hpp$\|\.tpp$\|\.ipp$\|\.cxx$\|\.go$\|\.rs$\|\.php$\|\.java$\|\.kt$\|\.kts$':
 			\['/*', '*/', '*'],
 			\'\.htm$\|\.html$\|\.xml$':
 			\['<!--', '-->', '*'],
@@ -145,7 +145,32 @@ function! s:stdheader()
 	endif
 endfunction
 
+function! s:fix_merge_conflict()
+	call s:filetype()
+	let l:checkline = s:start . repeat(' ', s:margin - strlen(s:start)) . "Updated: "
+
+	" fix conflict on 'Updated:' line
+	if getline(9) =~ "<<<<<<<" && getline(11) =~ "=======" && getline(13) =~ ">>>>>>>" && getline(10) =~ l:checkline
+		let l:line = 9
+		while l:line < 12
+			call setline(l:line, s:line(l:line))
+			let l:line = l:line + 1
+		endwhile
+	exe ":12,15d"
+
+	" fix conflict on both 'Created:' and 'Updated:' (unlikely, but useful in case)
+	elseif getline(8) =~ "<<<<<<<" && getline(11) =~ "=======" && getline(14) =~ ">>>>>>>" && getline(10) =~ l:checkline
+		let l:line = 8
+		while l:line < 12
+			call setline(l:line, s:line(l:line))
+			let l:line = l:line + 1
+		endwhile
+	exe ":12,16d"
+	endif
+endfunction
+
 " Bind command and shortcut
 command! Stdheader call s:stdheader ()
 map <F1> :Stdheader<CR>
 autocmd BufWritePre * call s:update ()
+autocmd BufReadPost * call s:fix_merge_conflict ()
