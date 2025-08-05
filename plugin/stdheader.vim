@@ -167,6 +167,7 @@ function! s:fix_merge_conflict()
 			call setline(l:line, s:line(l:line))
 			let l:line = l:line + 1
 		endwhile
+		echo "42header conflicts automatically resolved!"
 	exe ":12,15d"
 
 	" fix conflict on both 'Created:' and 'Updated:' (unlikely, but useful in case)
@@ -176,6 +177,7 @@ function! s:fix_merge_conflict()
 			call setline(l:line, s:line(l:line))
 			let l:line = l:line + 1
 		endwhile
+		echo "42header conflicts automatically resolved!"
 	exe ":12,16d"
 	endif
 endfunction
