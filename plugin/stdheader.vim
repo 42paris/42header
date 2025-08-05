@@ -32,7 +32,9 @@ let s:types		= {
 			\'\.f90$\|\.f95$\|\.f03$\|\.f$\|\.for$':
 			\['!', '!', '/'],
 			\'\.lua$':
-			\['--', '--', '-']
+			\['--', '--', '-'],
+			\'\.py$':
+			\['#', '#', '*']
 			\}
 
 function! s:filetype()
@@ -59,7 +61,12 @@ endfunction
 function! s:textline(left, right)
 	let l:left = strpart(a:left, 0, s:length - s:margin * 2 - strlen(a:right))
 
-	return s:start . repeat(' ', s:margin - strlen(s:start)) . l:left . repeat(' ', s:length - s:margin * 2 - strlen(l:left) - strlen(a:right)) . a:right . repeat(' ', s:margin - strlen(s:end)) . s:end
+	let l:spaces = s:length - s:margin * 2 - strlen(l:left) - strlen(a:right)
+	if l:spaces < 0
+		let l:spaces = 0
+	endif
+
+	return s:start . repeat(' ', s:margin - strlen(s:start)) . l:left . repeat(' ', l:spaces) . a:right . repeat(' ', s:margin - strlen(s:end)) . s:end
 endfunction
 
 function! s:line(n)
@@ -131,9 +138,13 @@ function! s:update()
 	call s:filetype()
 	if getline(9) =~ s:start . repeat(' ', s:margin - strlen(s:start)) . "Updated: "
 		if &mod
-			call setline(9, s:line(9))
+			if s:not_rebasing()
+				call setline(9, s:line(9))
+			endif
 		endif
-		call setline(4, s:line(4))
+		if s:not_rebasing()
+			call setline(4, s:line(4))
+		endif
 		return 0
 	endif
 	return 1
@@ -169,8 +180,20 @@ function! s:fix_merge_conflict()
 	endif
 endfunction
 
+function! s:not_rebasing()
+	if system("ls `git rev-parse --git-dir 2>/dev/null` | grep rebase | wc -l")
+		return 0
+	endif
+	return 1
+endfunction
+
 " Bind command and shortcut
+
 command! Stdheader call s:stdheader ()
 map <F1> :Stdheader<CR>
-autocmd BufWritePre * call s:update ()
-autocmd BufReadPost * call s:fix_merge_conflict ()
+
+augroup stdheader
+	autocmd!
+	autocmd BufWritePre * call s:update ()
+	autocmd BufReadPost * call s:fix_merge_conflict ()
+augroup END

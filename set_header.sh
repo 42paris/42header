@@ -26,4 +26,4 @@ mkdir -p ~/.vim/plugin
 # Add stdheader to vim plugins
 cp plugin/stdheader.vim ~/.vim/plugin/
 
-source ~/.zshrc
+echo 'Now reload your shell by running "source ~/.zshrc" or "exec zsh", or the equivalent for your shell.'
