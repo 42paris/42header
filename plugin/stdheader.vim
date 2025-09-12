@@ -1,11 +1,11 @@
 let s:asciiart = [
-			\"        :::      ::::::::",
-			\"      :+:      :+:    :+:",
-			\"    +:+ +:+         +:+  ",
-			\"  +#+  +:+       +#+     ",
-			\"+#+#+#+#+#+   +#+        ",
-			\"     #+#    #+#          ",
-			\"    ###   ########.fr    "
+			\"      /#/  |#/|#| ",
+			\"     /#/   |/ |#| ",
+			\"    /#/      /#/  ",
+			\"   /#/      /#/   ",
+			\"  /#/____  |#| /| ",
+			\" |#######| |#|/#| ",
+			\"       |#| .FR    ",
 			\]
 
 let s:start		= '/*'
@@ -93,7 +93,7 @@ function! s:user()
 	endif
 	let l:user = $USER
 	if strlen(l:user) == 0
-		let l:user = "marvin"
+		let l:user = "moulinette"
 	endif
 	return l:user
 endfunction
@@ -104,7 +104,7 @@ function! s:mail()
 	endif
 	let l:mail = $MAIL
 	if strlen(l:mail) == 0
-		let l:mail = "marvin@42.fr"
+		let l:mail = "moulinette@42.fr"
 	endif
 	return l:mail
 endfunction
