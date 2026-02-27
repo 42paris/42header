@@ -14,11 +14,16 @@ Copy `stdheader.vim` in your `~/.vim/plugin`, or use your favorite plugin
 manager. Then set the user and mail variables as explained below.
 
 #### Option 1: export USER and MAIL in your shell configuration file
+Use `echo $0` to determine if you are using bash or zsh shell.
 
-Add in `~/.zshrc` your:
+Add in `~/.zshrc` or `~/.bashrc` (create the files if they do not exist):
 
-+ `USER`
-+ `MAIL`
+```bash
+export USER='yourLogin'
+export MAIL='yourLogin@student.42.fr'
+```
+
+This sets the `USER` abd `MAIL` environment variables across your entire system.
 
 #### Option 2: set user and mail values directly in your vimrc
 
