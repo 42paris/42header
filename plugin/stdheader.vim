@@ -79,7 +79,12 @@ function! s:line(n)
 	elseif a:n == 4 " filename
 		return s:textline(s:filename(), s:ascii(a:n))
 	elseif a:n == 6 " author
-		return s:textline("By: " . s:user() . " <" . s:mail() . ">", s:ascii(a:n))
+		let l:author = "By: " . s:user() . " <" . s:mail() . ">"
+		let l:available = s:length - s:margin * 2 - strlen(s:ascii(a:n))
+		if strlen(l:author) > l:available
+			let l:author = "By: " . s:mail()
+		endif
+		return s:textline(l:author, s:ascii(a:n))
 	elseif a:n == 8 " created
 		return s:textline("Created: " . s:date() . " by " . s:user(), s:ascii(a:n))
 	elseif a:n == 9 " updated
