@@ -53,6 +53,7 @@ Inside the **42 clusters** you can easily run:
 [@mjacq42](https://github.com/mjacq42) - contributor  
 [@sungmcho](https://github.com/lordtomi0325) - contributor  
 [@fclivaz42](https://github.com/fclivaz42) - contributor  
+[@0xmthan](https://github.com/0xmthan) - contributor  
 
 ### **License**
 
