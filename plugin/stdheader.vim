@@ -34,7 +34,7 @@ let s:types		= {
 			\'\.lua$':
 			\['--', '--', '-'],
 			\'\.py$':
-			\['#', '#', '*']
+			\['#', '#', '*', 79]
 			\}
 
 function! s:filetype()
@@ -44,11 +44,14 @@ function! s:filetype()
 	let s:end	= '#'
 	let s:fill	= '*'
 
+	let s:length = 80
+
 	for type in keys(s:types)
 		if l:f =~ type
 			let s:start	= s:types[type][0]
 			let s:end	= s:types[type][1]
 			let s:fill	= s:types[type][2]
+			let s:length = get(s:types[type], 3, 80)
 		endif
 	endfor
 
